@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="account_loan_lines_view" model="ir.ui.view">
+        <field name="name">account.loan.lines.view</field>
+        <field name="model">account.loan.line</field>
+        <field name="arch" type="xml">
+            <tree create="0" import="0">
+                <field name="sequence" />
+                <field name="date" />
+                <field name="rate" />
+                <field name="pending_principal_amount" />
+                <field name="payment_amount" />
+                <field name="principal_amount" />
+                <field name="interests_amount" />
+                <field name="long_term_pending_principal_amount" />
+                <field name="long_term_principal_amount" />
+                <field name="company_id" />
+                <field name="partner_id" />
+                <field name="journal_id" />
+                <field name="short_term_loan_account_id" optional="hide" />
+                <field name="long_term_loan_account_id" optional="hide" />
+                <field name="interest_expenses_account_id" optional="hide" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_account_loan_lines_search" model="ir.ui.view">
+        <field name="name">Loan Lines</field>
+        <field name="model">account.loan.line</field>
+        <field name="arch" type="xml">
+            <group expand='0' string='Group by...'>
+                <filter
+                    string='Loan'
+                    name="group_by_loan_id"
+                    context="{'group_by': 'loan_id'}"
+                />
+            </group>
+        </field>
+    </record>
+
+    <record id="account_loan_lines_action" model="ir.actions.act_window">
+        <field name="name">Loans Lines</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.loan.line</field>
+        <field name="view_mode">tree,pivot,graph</field>
+        <field name="view_id" ref="account_loan_lines_view" />
+        <field name="context">{'search_default_group_by_loan_id': 1}</field>
+    </record>
+    <menuitem
+        id="account_loan_lines_menu"
+        parent="account.menu_finance_entries"
+        sequence="90"
+        name="Loans Lines"
+        action="account_loan_lines_action"
+    />
+</odoo>
